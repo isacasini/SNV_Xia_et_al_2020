@@ -5,5 +5,5 @@ There are two files, ReadMe_brief.txt and readme.docx that provide brief and det
 
 The directory, "Input Files" are the files that the program requires as an input. These should be modified based on the organism. 
 The directory, "Output Files" are the outputs of the program, including the compliment strand, and a excel file (DataSet.xlsx).
-The PyCharm library with all the python files can be found in the "Program Files" directory.
+The PyCharm library with all the Python files can be found in the "Program Files" directory.
 The Conda environment file is also included (Base_Editing_ENV.yml).
