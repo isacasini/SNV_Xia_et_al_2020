@@ -10,6 +10,7 @@ from AA_dict import *
 # import numpy as np
 from heatmap import *
 from edit_stats import *
+from add_functions import *
 
 import pandas as pd
 pd.set_option('display.max_rows', 500)
@@ -201,24 +202,86 @@ countCDSdf_all = countCDSdf_T.combine(countCDSdf_B, np.add, fill_value=0)
 # the num/count of non-editable CDSs on the bottom strand
 countCDS_df, strand_list, count_stop_T, count_stop_B, count_nonedit_T, count_nonedit_B = countsCDSedits(countCDSdf_all, df_all, dictCDSinfo)
 
+#####
+dictCDSinfo_new = cds_aa(dictCDSinfo)
+
+# finds the number (unique) of CDS that are stopable in the first 70%
+unique_cds_stop_t, unique_cds_stop_b = first_70(dictCDSinfo_new,df_all)
+count_cds_stop_t = len(unique_cds_stop_t)  # top strand (from CDS perspective)
+count_cds_stop_b = len(unique_cds_stop_b)  # bottom strand (from CDS perspective)
+
 #------------------------------------------------------------------------------------------------------------
 # STEP 17: Create information for the summary sheet of the workbook.
 # Pull together stats information, the index (rows), top (columns)
 # Then created the DF
 
+# sum_index = ["Total Edits in Genome", "Total Number of Editable CDSs", "Total Number of Noneditable CDSs",
+#              "Total Number of Stopable CDSs", "Total Number of Stopable CDSs in 1st 70%", "",
+#              "Silent Mutation", "Nonsense Mutation", "Missense Mutation"]
+# sum_T = [numC_T, strand_list.count("+"), count_nonedit_T, count_stop_T, count_cds_stop_t, "",
+#          new_term_T.count("Silent Mutation"), new_term_T.count("Nonsense Mutation"),
+#          new_term_T.count("Missense Mutation")]
+# sum_B = [numC_B, strand_list.count("-"), count_nonedit_B, count_stop_B, count_cds_stop_b, "",
+#          new_term_B.count("Silent Mutation"), new_term_B.count("Nonsense Mutation"),
+#          new_term_B.count("Missense Mutation")]
+# sum_all = [numC_T + numC_B, strand_list.count("+") + strand_list.count("-"), count_nonedit_T + count_nonedit_B,
+#            count_stop_T + count_stop_B, count_cds_stop_t+count_cds_stop_b, "",
+#            new_term_T.count("Silent Mutation") + new_term_B.count("Silent Mutation"),
+#            new_term_T.count("Nonsense Mutation") + new_term_B.count("Nonsense Mutation"),
+#            new_term_T.count("Missense Mutation") + new_term_B.count("Missense Mutation")]
+
 sum_index = ["Total Edits in Genome", "Total Number of Editable CDSs", "Total Number of Noneditable CDSs",
-             "Total Number of Stopable CDSs", "", "Nonsense", "Nonsense (stop)", "Missense"]
-sum_T = [numC_T, strand_list.count("+"), count_nonedit_T, count_stop_T, "", new_term_T.count("Nonsense"),
-         new_term_T.count("Nonsense (stop)"), new_term_T.count("Missense")]
-sum_B = [numC_B, strand_list.count("-"), count_nonedit_B, count_stop_B, "", new_term_B.count("Nonsense"),
-         new_term_B.count("Nonsense (stop)"), new_term_B.count("Missense")]
+             "Total Number of Stopable CDSs","Total Number of Stopable CDSs in 1st 70%", "", "Nonsense", "Nonsense (stop)", "Missense"]
+sum_T = [numC_T, strand_list.count("+"), count_nonedit_T, count_stop_T, count_cds_stop_t,"", new_term_T.count("Silent"),
+         new_term_T.count("Nonsense"), new_term_T.count("Missense")]
+sum_B = [numC_B, strand_list.count("-"), count_nonedit_B, count_stop_B, count_cds_stop_b, "", new_term_B.count("Silent"),
+         new_term_B.count("Nonsense"), new_term_B.count("Missense")]
 sum_all = [numC_T + numC_B, strand_list.count("+") + strand_list.count("-"), count_nonedit_T + count_nonedit_B,
-           count_stop_T + count_stop_B, "", new_term_T.count("Nonsense") + new_term_B.count("Nonsense"),
-           new_term_T.count("Nonsense (stop)") + new_term_B.count("Nonsense (stop)"), new_term_T.count("Missense")
+           count_stop_T + count_stop_B,count_cds_stop_t+count_cds_stop_b, "", new_term_T.count("Silent") + new_term_B.count("Silent"),
+           new_term_T.count("Nonsense") + new_term_B.count("Nonsense"), new_term_T.count("Missense")
            + new_term_B.count("Missense")]
+#
+
+
+
+
+
+# Functioning one
+
+# sum_index = ["Total Edits in Genome", "Total Number of Editable CDSs", "Total Number of Noneditable CDSs",
+#              "Total Number of Stopable CDSs","Total Number of Stopable CDSs in 1st 70%", "", "Nonsense", "Nonsense (stop)", "Missense"]
+# sum_T = [numC_T, strand_list.count("+"), count_nonedit_T, count_stop_T, count_cds_stop_t,"", new_term_T.count("Nonsense"),
+#          new_term_T.count("Nonsense (stop)"), new_term_T.count("Missense")]
+# sum_B = [numC_B, strand_list.count("-"), count_nonedit_B, count_stop_B, count_cds_stop_b, "", new_term_B.count("Nonsense"),
+#          new_term_B.count("Nonsense (stop)"), new_term_B.count("Missense")]
+# sum_all = [numC_T + numC_B, strand_list.count("+") + strand_list.count("-"), count_nonedit_T + count_nonedit_B,
+#            count_stop_T + count_stop_B,count_cds_stop_t+count_cds_stop_b, "", new_term_T.count("Nonsense") + new_term_B.count("Nonsense"),
+#            new_term_T.count("Nonsense (stop)") + new_term_B.count("Nonsense (stop)"), new_term_T.count("Missense")
+#            + new_term_B.count("Missense")]
+# #
+
+
+
+
+
+
+
+
+# sum_index = ["Total Edits in Genome", "Total Number of Editable CDSs", "Total Number of Noneditable CDSs",
+#              "Total Number of Stopable CDSs", "", "Nonsense", "Nonsense (stop)", "Missense"]
+# sum_T = [numC_T, strand_list.count("+"), count_nonedit_T, count_stop_T, "", new_term_T.count("Nonsense"),
+#          new_term_T.count("Nonsense (stop)"), new_term_T.count("Missense")]
+# sum_B = [numC_B, strand_list.count("-"), count_nonedit_B, count_stop_B, "", new_term_B.count("Nonsense"),
+#          new_term_B.count("Nonsense (stop)"), new_term_B.count("Missense")]
+# sum_all = [numC_T + numC_B, strand_list.count("+") + strand_list.count("-"), count_nonedit_T + count_nonedit_B,
+#            count_stop_T + count_stop_B, "", new_term_T.count("Nonsense") + new_term_B.count("Nonsense"),
+#            new_term_T.count("Nonsense (stop)") + new_term_B.count("Nonsense (stop)"), new_term_T.count("Missense")
+#            + new_term_B.count("Missense")]
+
+
 
 # These give the column headings
-sum_all_dict = {'Top Strand':sum_T, 'Bottom Strand':sum_B, "Total":sum_all}
+sum_all_dict = {'Top Strand': sum_T, 'Bottom Strand': sum_B, "Total": sum_all}
 sum_all_df = pd.DataFrame(sum_all_dict, index=sum_index)
 
 #------------------------------------------------------------------------------------------------------------
@@ -232,18 +295,21 @@ count_matrix_df = make_matrix(countAAchange_df)
 
 #------------------------------------------------------------------------------------------------------------
 # STEP 19: Edit the column names of the dataframes for the final excel sheet to make more user-friendly
-countCDS_df.rename(columns={'Unique Nonsense': 'Nonsense Mutations', 'Unique Missense': 'Missense Mutations',
-                            'Unique Nonsense (stop)': 'Nonsense (STOP codons)'}, inplace=True)
+countCDS_df.rename(columns={'Unique Nonsense': 'Silent Mutations', 'Unique Missense': 'Missense Mutations',
+                            'Unique Nonsense (stop)': 'Nonsense Mutations'}, inplace=True)
 df_all.rename(columns={'"C" Strand': 'Editing Strand ("+" indicates top strand in the DNA file)',
                        'Locus': 'CDS/Gene','Locus Strand': 'CDS Strand','AA Number': 'AA Position',
                        'Old AA': 'Original AA','Old AA Code': 'Original AA (One letter)','New AA': 'Replaced AA',
                        'New AA Code': 'Replaced AA (One letter)','New Codon': 'Replaced Codon','Term': 'Mutation Type',
                        'PAM Range': 'PAM Position','20bp up PAM': 'Protospacer'}, inplace=True)
 
+sum_all_df.rename(index={'Nonsense': 'Silent Mutations', 'Missense': 'Missense Mutations',
+                            "Nonsense (stop)": 'Nonsense Mutations'}, inplace=True)
+
 #------------------------------------------------------------------------------------------------------------
 # STEP 20: Write out all the information to a workbook in 5 different sheets
 # USER_INPUT_REQUIRED - change the path in writePathout
-writePathout = r'E:\Colleague\Pengfei\Program_Final\Dataset.xlsx'
+writePathout = r'E:\Colleague\Pengfei\Program_Final\Dataset_70.xlsx'
 writer = pd.ExcelWriter(writePathout,engine='xlsxwriter')
 
 sum_all_df.to_excel(writer, sheet_name='Summary', header=True, index=True, index_label=None)

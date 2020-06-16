@@ -4,11 +4,11 @@ Last Updated: 24 March 2020
 
 
 Introduction:
-The following file is provided as a brief ReadMe file, for someone who would like to edit and use this program. 
-Everything was coded in Python 3.6 using Pycharm (2018.1) with a Conda (Anaconda) environment, “Base Editing”, 
-the details for which are provided in a separate .yml file (Base_Editing_Env.yml). The final directory contains this file, 
-a more detailed .docx version of this file (with a more detailed description of what program does and each function - which can also be accessed through the help() 
-function in Python), the zipped PyCharm files, the input and output files that were used and produced,and the Conda environment file. 
+The following file is provided as a detailed ReadMe file, for someone who would like to edit and use this program. 
+Here are descriptions of each script, files necessary, and files produced. Everything was coded in Python 3.6 using Pycharm (2018.1) 
+with a Conda (Anaconda) environment, “Base Editing”, the details for which are provided in a separate .yml file (Base_Editing_Env.yml).
+The final directory contains this file, a less detailed text version of this file, the zipped PyCharm files, 
+the input and output files that were used and produced, and the Conda environment file. 
 
 General Notes:
 1. Suffix “T” refers to Top strand

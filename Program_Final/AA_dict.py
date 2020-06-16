@@ -370,7 +370,7 @@ def AA_determinator_df(dataframeStrand):
         aa = AAdict[key][0] # value of the dictionary # the amino acid 3 letter code
         aacode = AAdict[key][1] # gives the AA acid single letter code
 
-        keylist = list(key)#make the codon into a list so that it can be mutable
+        keylist = list(key) # make the codon into a list so that it can be mutable
 
         if cstrand == "+" and locus_strand == "+":
             keylist[positionincodon] = 't'
@@ -398,15 +398,21 @@ def AA_determinator_df(dataframeStrand):
         if newAA == aa:
             # print("The amino acids are the same")
             count_same += 1
-            term = "Nonsense"
+            # term = "Nonsense"
+            term = "Silent"
+
         elif newAA == "STOP":
             # print("The new amino acid is a stop codon")
             count_stop += 1
-            term = "Nonsense (stop)"
+            # term = "Nonsense (stop)"
+            term = "Nonsense"
+
         else:
             # print("print amino acids are different")
             count_rest += 1
+            # term = "Missense"
             term = "Missense"
+
         term_list.append(term)
 
     # print("\n\nCountSame:\t", count_same)
@@ -472,7 +478,7 @@ def addPAM(listPAM, df):
             listrange.append(CPAMdict[c][0][1])
             list20bp.append(CPAMdict[c][0][3])
 
-        elif len(CPAMdict[c]) > 1:  # There are more than one PAM sequences tha can be used to edit this C
+        elif len(CPAMdict[c]) > 1:  # There are more than one PAM sequences that can be used to edit this C
             # print("there are {} pam sequences".format(len(CPAMdict_T[c])))
             tempseqlist = []
             temprangelist = []

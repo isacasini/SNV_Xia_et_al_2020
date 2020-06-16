@@ -20,6 +20,7 @@ def findPAM(sequence, strand):
             start = int(i.start())
             bp = sequence[start - 20:start]
             # these extra the BP in the 2nd, 3rd, and 4th position from the 5' direction in the 20 BP before the PAM Sequence
+            # example alternative is below
             bp2 = sequence[start - 19]
             bp3 = sequence[start - 18]
             bp4 = sequence[start - 17]
@@ -34,6 +35,25 @@ def findPAM(sequence, strand):
                         str(bp2 + bp3 + bp4 + bp5 + bp6 + bp7 + bp8 + bp9 + bp10)]
             PAM_info.append(templist)
             row += 1
+
+            # -------------------------------------------------------------------------------------------------------
+            # # Alternative with only -19 to -16
+            # bp2 = sequence[start - 19]
+            # bp3 = sequence[start - 18]
+            # bp4 = sequence[start - 17]
+            # bp5 = sequence[start - 16]
+            # # bp6 = sequence[start - 15]
+            # # bp7 = sequence[start - 14]
+            # # bp8 = sequence[start - 13]
+            # # bp9 = sequence[start - 12]
+            # # bp10 = sequence[start - 11]
+            #
+            # templist = [str(row + 1), i.group(), i.start() + 1, i.end(), bp,
+            #             str(bp2 + bp3 + bp4 + bp5)]# + bp6 + bp7 + bp8 + bp9 + bp10)]
+            # PAM_info.append(templist)
+            # row += 1
+            # #End alternative
+            # --------------------------------------------------------------------------------------------------------
 
     elif strand == "-":
         # initialize column and row
@@ -53,6 +73,7 @@ def findPAM(sequence, strand):
             start = int(i.start())
             bp = sequence[start - 20:start]
             # these extra the BP in the 2nd, 3rd, and 4th position from the 5' direction in the 20 BP before the PAM Sequence
+            # # Start alternative
             bp2 = sequence[start - 19]
             bp3 = sequence[start - 18]
             bp4 = sequence[start - 17]
@@ -73,5 +94,29 @@ def findPAM(sequence, strand):
             PAM_info.append(templist)
 
             row += 1
+
+            # -------------------------------------------------------------------------------------------------------
+            # # Alternative with only -19 to -16
+            # bp2 = sequence[start - 19]
+            # bp3 = sequence[start - 18]
+            # bp4 = sequence[start - 17]
+            # bp5 = sequence[start - 16]
+            # # bp6 = sequence[start - 15]
+            # # bp7 = sequence[start - 14]
+            # # bp8 = sequence[start - 13]
+            # # bp9 = sequence[start - 12]
+            # # bp10 = sequence[start - 11]
+            #
+            # # this is to give the actual position of the PAM sequence on the Bottom Strand based on the numbering from the top strand
+            # adj_start = numbp - i.start()
+            # adj_end = numbp - i.end() + 1
+            #
+            # templist = [str(row + 1), i.group(), adj_start, adj_end, bp,
+            #             str(bp2 + bp3 + bp4 + bp5)]# + bp6 + bp7 + bp8 + bp9 + bp10)]
+            # PAM_info.append(templist)
+            # row += 1
+            # # #End alternative
+            # --------------------------------------------------------------------------------------------------------
+
 
     return PAM_info

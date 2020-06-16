@@ -48,6 +48,7 @@ def find_duplicates(df_all):
         dictCDScount[cds] = [countnonsense,countmissense,countstop]
 
     countCDSunique_df = pd.DataFrame.from_dict(dictCDScount, orient='index')
+    # countCDSunique_df.rename(columns={0: 'Unique Nonsense', 1: 'Unique Missense', 2: 'Unique Nonsense (stop)'}, inplace=True)
     countCDSunique_df.rename(columns={0: 'Unique Nonsense', 1: 'Unique Missense', 2: 'Unique Nonsense (stop)'}, inplace=True)
 
     return countCDSunique_df
